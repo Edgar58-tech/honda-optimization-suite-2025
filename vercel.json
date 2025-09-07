@@ -6,8 +6,19 @@
       "use": "@vercel/next"
     }
   ],
+  "installCommand": "yarn install --prefer-offline",
+  "buildCommand": "yarn prisma generate && yarn build",
   "env": {
     "NEXTAUTH_URL": "https://honda-san-antonio-optimization.vercel.app",
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "SKIP_ENV_VALIDATION": "true"
+  },
+  "functions": {
+    "app/api/**/*.js": {
+      "includeFiles": "prisma/**"
+    },
+    "app/api/**/*.ts": {
+      "includeFiles": "prisma/**"
+    }
   }
 }
