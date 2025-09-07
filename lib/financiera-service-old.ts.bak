@@ -1,0 +1,258 @@
+
+import { PlanFinanciera, ConfigFinanciera, Excepcion, CalculoFinanciamiento } from './types';
+
+export class FinancieraService {
+  private configuraciones: Record<string, ConfigFinanciera> = {};
+
+  constructor(configuraciones?: Record<string, ConfigFinanciera>) {
+    if (configuraciones) {
+      this.configuraciones = configuraciones;
+    }
+  }
+
+  // Obtener plan aplicable para una línea/versión específica
+  obtenerPlanAplicable(
+    financiera: string, 
+    linea: string, 
+    version?: string
+  ): PlanFinanciera | null {
+    const config = this.configuraciones[financiera];
+    if (!config) return null;
+
+    // 1. Buscar excepción específica
+    const excepcion = this.buscarExcepcion(config, linea, version);
+    if (excepcion) {
+      const planAlternativo = config.planes.find(p => p.id === excepcion.plan_alternativo_id);
+      if (planAlternativo) return planAlternativo;
+    }
+
+    // 2. Buscar plan específico (línea + versión)
+    if (version) {
+      const planEspecifico = config.planes.find(p => 
+        p.linea === linea && p.version === version && !p.es_generico
+      );
+      if (planEspecifico) return planEspecifico;
+    }
+
+    // 3. Buscar plan por línea completa
+    const planLinea = config.planes.find(p => 
+      p.linea === linea && !p.version && !p.es_generico
+    );
+    if (planLinea) return planLinea;
+
+    // 4. Usar plan genérico (fallback)
+    const planGenerico = config.planes.find(p => p.es_generico);
+    return planGenerico || null;
+  }
+
+  // Buscar excepción aplicable
+  private buscarExcepcion(
+    config: ConfigFinanciera, 
+    linea: string, 
+    version?: string
+  ): Excepcion | null {
+    // Buscar excepción exacta (línea + versión)
+    if (version) {
+      const excepcionExacta = config.excepciones.find(e => 
+        e.linea === linea && e.version === version
+      );
+      if (excepcionExacta) return excepcionExacta;
+    }
+
+    // Buscar excepción por línea
+    const excepcionLinea = config.excepciones.find(e => 
+      e.linea === linea && !e.version
+    );
+    return excepcionLinea || null;
+  }
+
+  // Calcular financiamiento completo CORREGIDO
+  calcularFinanciamiento(
+    financiera: string,
+    linea: string,
+    version: string,
+    precioLista: number,
+    enganche: number,
+    incentivosCliente?: number, // Ahora opcional, usar del plan si no se especifica
+    participacionDistribuidor?: number // Opcional, usar del plan si no se especifica
+  ): CalculoFinanciamiento | null {
+    const plan = this.obtenerPlanAplicable(financiera, linea, version);
+    if (!plan) return null;
+
+    // Validar enganche dentro de rangos
+    if (enganche < plan.enganche_minimo || enganche > (plan.enganche_maximo || 99)) {
+      console.warn(`Enganche ${enganche}% fuera de rango para ${financiera}: ${plan.enganche_minimo}% - ${plan.enganche_maximo || 99}%`);
+    }
+
+    // Usar valores del plan si no se especifican
+    const incentivosUsados = incentivosCliente !== undefined ? incentivosCliente : (plan.bono_subsidio || 0);
+    const participacionUsada = participacionDistribuidor !== undefined 
+      ? participacionDistribuidor 
+      : (100 - plan.participacion_financiera) / 100;
+
+    // Cálculos paso a paso CORREGIDOS
+    const montoEnganche = precioLista * (enganche / 100);
+    const costoIncentivosDistribuidor = incentivosUsados * participacionUsada;
+    const precioAjustado = precioLista - incentivosUsados;
+    const saldoFinanciar = precioAjustado - montoEnganche;
+    
+    const comisionApertura = saldoFinanciar * (plan.comision_apertura / 100);
+    const pagoDistribuidor = saldoFinanciar * (plan.pago_distribuidor / 100);
+    
+    // Utilidad total = Pago distribuidor - Costo real de incentivos
+    const utilidadTotal = pagoDistribuidor - costoIncentivosDistribuidor;
+
+    return {
+      financiera,
+      plan,
+      precio_lista: precioLista,
+      enganche: montoEnganche,
+      saldo_financiar: saldoFinanciar,
+      comision_apertura: comisionApertura,
+      pago_distribuidor: pagoDistribuidor,
+      costo_incentivos_distribuidor: costoIncentivosDistribuidor,
+      utilidad_total: utilidadTotal
+    };
+  }
+
+  // Comparar planes de múltiples financieras
+  compararFinancieras(
+    financieras: string[],
+    linea: string,
+    version: string,
+    precioLista: number,
+    enganche: number,
+    incentivosCliente: number = 0
+  ): CalculoFinanciamiento[] {
+    const resultados: CalculoFinanciamiento[] = [];
+
+    financieras.forEach(financiera => {
+      const config = this.configuraciones[financiera];
+      if (!config) return;
+
+      // Usar participación específica de la financiera
+      const planBase = config.planes.find(p => p.es_generico);
+      const participacionDistribuidor = planBase 
+        ? (100 - planBase.participacion_financiera) / 100 
+        : 0.3;
+
+      const calculo = this.calcularFinanciamiento(
+        financiera,
+        linea,
+        version,
+        precioLista,
+        enganche,
+        incentivosCliente,
+        participacionDistribuidor
+      );
+
+      if (calculo) {
+        resultados.push(calculo);
+      }
+    });
+
+    // Ordenar por utilidad total (descendente)
+    return resultados.sort((a, b) => b.utilidad_total - a.utilidad_total);
+  }
+
+  // Optimizar enganche para maximizar utilidad
+  optimizarEnganche(
+    financiera: string,
+    linea: string,
+    version: string,
+    precioLista: number,
+    incentivosCliente: number = 0
+  ): { enganches: number[], utilidades: number[], optimo: { enganche: number, utilidad: number } } {
+    const plan = this.obtenerPlanAplicable(financiera, linea, version);
+    if (!plan) return { enganches: [], utilidades: [], optimo: { enganche: 0, utilidad: 0 } };
+
+    const enganches: number[] = [];
+    const utilidades: number[] = [];
+    let mejorEnganche = plan.enganche_minimo;
+    let mejorUtilidad = 0;
+
+    // Evaluar desde enganche mínimo hasta máximo
+    const enganchemin = plan.enganche_minimo;
+    const enganchemax = plan.enganche_maximo || 99;
+
+    for (let enganche = enganchemin; enganche <= enganchemax; enganche += 5) {
+      const config = this.configuraciones[financiera];
+      const planBase = config?.planes.find(p => p.es_generico);
+      const participacionDistribuidor = planBase 
+        ? (100 - planBase.participacion_financiera) / 100 
+        : 0.3;
+
+      const calculo = this.calcularFinanciamiento(
+        financiera,
+        linea,
+        version,
+        precioLista,
+        enganche,
+        incentivosCliente,
+        participacionDistribuidor
+      );
+
+      if (calculo) {
+        enganches.push(enganche);
+        utilidades.push(calculo.utilidad_total);
+
+        if (calculo.utilidad_total > mejorUtilidad) {
+          mejorUtilidad = calculo.utilidad_total;
+          mejorEnganche = enganche;
+        }
+      }
+    }
+
+    return {
+      enganches,
+      utilidades,
+      optimo: { enganche: mejorEnganche, utilidad: mejorUtilidad }
+    };
+  }
+
+  // Actualizar configuraciones
+  actualizarConfiguraciones(configuraciones: Record<string, ConfigFinanciera>): void {
+    this.configuraciones = configuraciones;
+  }
+
+  // Obtener todas las configuraciones
+  obtenerConfiguraciones(): Record<string, ConfigFinanciera> {
+    return { ...this.configuraciones };
+  }
+
+  // Validar configuración
+  validarConfiguracion(config: ConfigFinanciera): string[] {
+    const errores: string[] = [];
+
+    // Validar que existe al menos un plan base
+    const planBase = config.planes.find(p => p.es_generico);
+    if (!planBase) {
+      errores.push('Debe existir al menos un plan base (genérico)');
+    }
+
+    // Validar rangos de enganche
+    config.planes.forEach(plan => {
+      if (plan.enganche_minimo < 0 || plan.enganche_minimo > 100) {
+        errores.push(`Plan ${plan.nombre}: Enganche mínimo debe estar entre 0-100%`);
+      }
+      if (plan.enganche_maximo && (plan.enganche_maximo < 0 || plan.enganche_maximo > 100)) {
+        errores.push(`Plan ${plan.nombre}: Enganche máximo debe estar entre 0-100%`);
+      }
+      if (plan.enganche_maximo && plan.enganche_minimo > plan.enganche_maximo) {
+        errores.push(`Plan ${plan.nombre}: Enganche mínimo no puede ser mayor al máximo`);
+      }
+    });
+
+    // Validar participaciones
+    config.planes.forEach(plan => {
+      if (plan.participacion_financiera < 0 || plan.participacion_financiera > 100) {
+        errores.push(`Plan ${plan.nombre}: Participación financiera debe estar entre 0-100%`);
+      }
+    });
+
+    return errores;
+  }
+}
+
+// Instancia singleton para uso global
+export const financieraService = new FinancieraService();

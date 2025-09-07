@@ -1,0 +1,964 @@
+{
+  "metadata": {
+    "fecha_creacion": "2025-09-03T23:52:03.756477",
+    "vigencia": "2 al 30 de septiembre 2025",
+    "descripcion": "Base de datos para modelo de optimización de utilidades Honda",
+    "objetivo": "Maximizar utilidades distribuyendo 28 unidades mensuales entre financieras y líneas de vehículos",
+    "contexto_agencia": {
+      "lineas_vehiculos": [
+        "CR-V Hybrid",
+        "Accord Hybrid",
+        "Civic Hybrid",
+        "City",
+        "Civic",
+        "Accord",
+        "BR-V",
+        "HR-V",
+        "CR-V",
+        "Pilot",
+        "Odyssey"
+      ],
+      "ventas_mensuales": 28,
+      "distribucion_actual": {
+        "credito": 17,
+        "arrendamiento": 0
+      },
+      "precio_promedio": 650000,
+      "comision_arrendamiento": "2% sobre valor factura",
+      "comision_credito": "Sobre saldo a financiar"
+    }
+  },
+  "financieras": {
+    "BBVA": {
+      "financiera": "BBVA",
+      "vigencia": "2 al 30 de septiembre 2025",
+      "boletin": "HDM-HF-25-361",
+      "bonos_especiales": {
+        "City": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 10000,
+              "bono_sin_iva": 8620.69
+            }
+          },
+          "2024": {
+            "Touring": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Prime": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Sport": {
+              "bono_con_iva": 35000,
+              "bono_sin_iva": 30172.41
+            }
+          }
+        },
+        "CR-V": {
+          "2025": {
+            "Turbo": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Turbo Plus": {
+              "bono_con_iva": 25000,
+              "bono_sin_iva": 21551.72
+            },
+            "Touring": {
+              "bono_con_iva": 50000,
+              "bono_sin_iva": 43103.45
+            },
+            "HEV": {
+              "bono_con_iva": 50000,
+              "bono_sin_iva": 43103.45
+            }
+          },
+          "2026": {
+            "Turbo Plus": {
+              "bono_con_iva": 24300,
+              "bono_sin_iva": 20948.28
+            },
+            "Touring": {
+              "bono_con_iva": 25600,
+              "bono_sin_iva": 22068.97
+            },
+            "HEV": {
+              "bono_con_iva": 28300,
+              "bono_sin_iva": 24396.55
+            },
+            "Sport Touring HEV": {
+              "bono_con_iva": 29100,
+              "bono_sin_iva": 25086.21
+            }
+          }
+        },
+        "BR-V": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 25000,
+              "bono_sin_iva": 21551.72
+            },
+            "Uniq": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.76
+            }
+          }
+        },
+        "Odyssey": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.89
+            },
+            "Black Edition": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.89
+            }
+          }
+        },
+        "Pilot": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.89
+            },
+            "Black Edition": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.89
+            }
+          }
+        },
+        "Civic": {
+          "2025": {
+            "i-Style": {
+              "bono_con_iva": 10000,
+              "bono_sin_iva": 8620.68
+            },
+            "Sport": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.75
+            }
+          }
+        },
+        "Accord": {
+          "2024": {
+            "Prime": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.37
+            },
+            "Touring": {
+              "bono_con_iva": 80000,
+              "bono_sin_iva": 68965.51
+            }
+          },
+          "2025": {
+            "Prime": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.37
+            },
+            "Touring": {
+              "bono_con_iva": 80000,
+              "bono_sin_iva": 68965.51
+            }
+          }
+        },
+        "HR-V": {
+          "2026": {
+            "Touring": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.75
+            },
+            "Sport": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.75
+            },
+            "Uniq": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.37
+            }
+          }
+        }
+      },
+      "planes_financiamiento": {
+        "ESP_CR-V_2026": {
+          "descripcion": "Plan especial lanzamiento CR-V 2026",
+          "enganche_minimo": "50%",
+          "plazo": "12 a 72 meses",
+          "tasa": "9.49%",
+          "comision": "0/2/2.5%",
+          "incentivo": "0/2/2.5%"
+        },
+        "TRAD_2_NVO": {
+          "descripcion": "Plan tradicional 2 nuevos",
+          "tasas_por_enganche": {
+            "5%": {
+              "tasa": "17.99%",
+              "plazo": "12 a 60"
+            },
+            "20%": {
+              "tasa": "15.99%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "12.99%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "11.99%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "10.49%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision": "0/2/2.5%",
+          "incentivo": "1.5/3.5/4%"
+        },
+        "TRAD_1_NVO": {
+          "descripcion": "Plan tradicional 1 nuevos con mayor incentivo",
+          "tasas_por_enganche": {
+            "5%": {
+              "tasa": "18.49%",
+              "plazo": "12 a 60"
+            },
+            "20%": {
+              "tasa": "16.99%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "13.99%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "12.99%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "11.99%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision": "0/2/2.5%",
+          "incentivo": "2/4/4.5%"
+        },
+        "CAMP_NVO": {
+          "descripcion": "Plan campaña hasta 6% incentivo",
+          "tasas_por_enganche": {
+            "5%": {
+              "tasa": "18.99%",
+              "plazo": "12 a 60"
+            },
+            "20%": {
+              "tasa": "18.49%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "14.99%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "13.99%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "12.99%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision": "0/2/3%",
+          "incentivo": "3.5/5.5/6%"
+        },
+        "ECO_NVO": {
+          "descripcion": "Plan especial ECO (CR-V HEV + Accord HEV)",
+          "modelos_aplicables": [
+            "CR-V HEV",
+            "Accord HEV"
+          ],
+          "enganche_minimo": "5%",
+          "tasa": "13.99%",
+          "plazo": "12 a 60",
+          "comision": "2%",
+          "incentivo": "2%"
+        },
+        "SUV_NVO": {
+          "descripcion": "Plan especial SUV",
+          "modelos_aplicables": [
+            "BR-V",
+            "CR-V",
+            "HR-V",
+            "Pilot"
+          ],
+          "enganche_minimo": "5%",
+          "tasa": "13.99%",
+          "plazo": "12 a 60",
+          "comision": "2%",
+          "incentivo": "2%"
+        }
+      },
+      "smart_value": {
+        "CI_HONDA": {
+          "24_meses": {
+            "valor_futuro": "49%",
+            "comision": "3.5%"
+          },
+          "36_meses": {
+            "valor_futuro": "40%",
+            "comision": "2%"
+          }
+        },
+        "CI_HONDA_2": {
+          "24_meses": {
+            "valor_futuro": "49%",
+            "comision": "3.00%"
+          },
+          "36_meses": {
+            "valor_futuro": "40%",
+            "comision": "2%"
+          }
+        },
+        "CI_CAMP": {
+          "24_meses": {
+            "valor_futuro": "49%",
+            "comision": "0/2/3%",
+            "incentivo": "3/5/6%"
+          },
+          "36_meses": {
+            "valor_futuro": "40%",
+            "comision": "0/2/3%",
+            "incentivo": "3/5/6%"
+          }
+        },
+        "CI_HONDA_ECO": {
+          "24_meses": {
+            "valor_futuro": "49%",
+            "comision": "2%",
+            "incentivo": "2%"
+          },
+          "36_meses": {
+            "valor_futuro": "40%",
+            "comision": "2%",
+            "incentivo": "2%"
+          }
+        }
+      },
+      "seminuevos": {
+        "TRAD_SN": {
+          "2021-2025": {
+            "enganche_10%": {
+              "tasa": "16.99%",
+              "plazo": "12 a 60"
+            },
+            "enganche_30%": {
+              "tasa": "15.99%",
+              "plazo": "12 a 60"
+            },
+            "enganche_40%": {
+              "tasa": "13.99%",
+              "plazo": "12 a 60"
+            }
+          },
+          "2019-2020": {
+            "enganche_10%": {
+              "tasa": "16.99%",
+              "plazo": "12 a 48"
+            },
+            "enganche_30%": {
+              "tasa": "15.99%",
+              "plazo": "12 a 48"
+            },
+            "enganche_40%": {
+              "tasa": "13.99%",
+              "plazo": "12 a 48"
+            }
+          },
+          "2018": {
+            "enganche_30%": {
+              "tasa": "15.99%",
+              "plazo": "12 a 36"
+            },
+            "enganche_40%": {
+              "tasa": "13.99%",
+              "plazo": "12 a 36"
+            }
+          },
+          "2017": {
+            "enganche_30%": {
+              "tasa": "15.99%",
+              "plazo": "12"
+            },
+            "enganche_40%": {
+              "tasa": "13.99%",
+              "plazo": "12"
+            }
+          },
+          "comision": "1/2/3%",
+          "incentivo": "1/2/3%"
+        }
+      },
+      "condiciones_especiales": {
+        "bono_f_i": 1000,
+        "puntos_lealtad": "En todas las operaciones",
+        "vigencia_formalizacion": "90 días para solicitudes aprobadas",
+        "vigencia_bonos_hdm": "Hasta 2 de octubre 2025"
+      }
+    },
+    "Banorte": {
+      "financiera": "Banorte",
+      "vigencia": "2 al 30 de septiembre 2025",
+      "boletin": "HDM-HF-25-362",
+      "bonos_especiales": {
+        "City": {
+          "2024": {
+            "Touring": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Prime": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Sport": {
+              "bono_con_iva": 35000,
+              "bono_sin_iva": 30172.41
+            }
+          },
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 10000,
+              "bono_sin_iva": 8620.69
+            }
+          }
+        },
+        "Civic": {
+          "2025": {
+            "i-Style": {
+              "bono_con_iva": 10000,
+              "bono_sin_iva": 8620.69
+            },
+            "Sport": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.76
+            }
+          }
+        },
+        "Accord": {
+          "2024": {
+            "Prime": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Touring": {
+              "bono_con_iva": 80000,
+              "bono_sin_iva": 68965.52
+            }
+          },
+          "2025": {
+            "Prime": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            },
+            "Touring": {
+              "bono_con_iva": 80000,
+              "bono_sin_iva": 68965.52
+            }
+          }
+        },
+        "BR-V": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 25000,
+              "bono_sin_iva": 21551.72
+            },
+            "Uniq": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.76
+            }
+          }
+        },
+        "HR-V": {
+          "2026": {
+            "Touring": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.76
+            },
+            "Sport": {
+              "bono_con_iva": 40000,
+              "bono_sin_iva": 34482.76
+            },
+            "Uniq-CVT": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            }
+          }
+        },
+        "CR-V": {
+          "2025": {
+            "Touring HEV": {
+              "bono_con_iva": 50000,
+              "bono_sin_iva": 43103.45
+            },
+            "Touring": {
+              "bono_con_iva": 50000,
+              "bono_sin_iva": 43103.45
+            },
+            "Turbo Plus": {
+              "bono_con_iva": 25000,
+              "bono_sin_iva": 21551.72
+            },
+            "Turbo": {
+              "bono_con_iva": 20000,
+              "bono_sin_iva": 17241.38
+            }
+          },
+          "2026": {
+            "Turbo Plus": {
+              "bono_con_iva": 24300,
+              "bono_sin_iva": 20948.28,
+              "aplicacion": "Solo tasa"
+            },
+            "Touring": {
+              "bono_con_iva": 25600,
+              "bono_sin_iva": 22068.96,
+              "aplicacion": "Solo tasa"
+            },
+            "Touring HEV": {
+              "bono_con_iva": 28300,
+              "bono_sin_iva": 24396.55,
+              "aplicacion": "Solo tasa"
+            },
+            "Sport Touring HEV": {
+              "bono_con_iva": 29100,
+              "bono_sin_iva": 25086.21,
+              "aplicacion": "Solo tasa"
+            }
+          }
+        },
+        "Odyssey": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.9
+            },
+            "Black Edition": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.9
+            }
+          }
+        },
+        "Pilot": {
+          "2025": {
+            "Touring": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.9
+            },
+            "Black Edition": {
+              "bono_con_iva": 100000,
+              "bono_sin_iva": 86206.9
+            }
+          }
+        }
+      },
+      "planes_financiamiento": {
+        "Honda_Feria_SUV_2026": {
+          "descripcion": "Plan especial HR-V 2026 y CR-V 2026",
+          "modelos_aplicables": [
+            "HR-V 2026",
+            "CR-V 2026"
+          ],
+          "tasas_por_enganche": {
+            "10%": {
+              "tasa": "17.49%",
+              "plazo": "12 a 72"
+            },
+            "20%": {
+              "tasa": "14.99%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "11.99%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "10.49%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "9.49%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision_apertura": {
+            "0.0%": {
+              "pago_distribuidor": "1.5%",
+              "enganche": "10-49%"
+            },
+            "2.0%": {
+              "pago_distribuidor": "3.5%",
+              "enganche": "10-49%"
+            },
+            "2.5%": {
+              "pago_distribuidor": "4%",
+              "enganche": "10-49%"
+            },
+            "0.0%_50": {
+              "pago_distribuidor": "3.0%",
+              "enganche": "50%"
+            },
+            "1.0%_50": {
+              "pago_distribuidor": "4.0%",
+              "enganche": "50%"
+            },
+            "2.0%_50": {
+              "pago_distribuidor": "5.0%",
+              "enganche": "50%"
+            }
+          },
+          "bono_adicional": 1000
+        },
+        "Honda_Finance": {
+          "descripcion": "Plan Honda Finance tasa desde 9.99%",
+          "modelos_aplicables": [
+            "Todos los nuevos y seminuevos"
+          ],
+          "tasas_por_enganche": {
+            "10%": {
+              "tasa": "17.99%",
+              "plazo": "12 a 72"
+            },
+            "20%": {
+              "tasa": "15.49%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "12.49%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "10.99%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "9.99%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision_apertura": {
+            "0.0%": {
+              "pago_distribuidor": "1.5%",
+              "enganche": "10-49%"
+            },
+            "2.0%": {
+              "pago_distribuidor": "3.5%",
+              "enganche": "10-49%"
+            },
+            "2.5%": {
+              "pago_distribuidor": "4%",
+              "enganche": "10-49%"
+            },
+            "0.0%_50": {
+              "pago_distribuidor": "3.0%",
+              "enganche": "50%"
+            },
+            "1.0%_50": {
+              "pago_distribuidor": "4.0%",
+              "enganche": "50%"
+            },
+            "2.0%_50": {
+              "pago_distribuidor": "5.0%",
+              "enganche": "50%"
+            }
+          },
+          "restricciones": "No aplica 0% comisión apertura para Odyssey y Pilot",
+          "bono_adicional": 1000
+        },
+        "Honda_Finance_10.49": {
+          "descripcion": "Plan Honda Finance tasa desde 10.49%",
+          "tasas_por_enganche": {
+            "10%": {
+              "tasa": "18.49%",
+              "plazo": "12 a 72"
+            },
+            "20%": {
+              "tasa": "15.99%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "12.99%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "11.99%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "10.49%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision_apertura": {
+            "0.0%": {
+              "pago_distribuidor": "1.5%"
+            },
+            "2.0%": {
+              "pago_distribuidor": "3.5%"
+            },
+            "2.5%": {
+              "pago_distribuidor": "4%"
+            }
+          },
+          "planes_especiales": [
+            "Plan Estudiante",
+            "Ama de Casa"
+          ]
+        },
+        "Honda_Finance_11.99": {
+          "descripcion": "Plan Honda Finance tasa desde 11.99%",
+          "tasas_por_enganche": {
+            "10%": {
+              "tasa": "18.49%",
+              "plazo": "12 a 72"
+            },
+            "20%": {
+              "tasa": "16.99%",
+              "plazo": "12 a 72"
+            },
+            "30%": {
+              "tasa": "13.99%",
+              "plazo": "12 a 72"
+            },
+            "40%": {
+              "tasa": "12.99%",
+              "plazo": "12 a 72"
+            },
+            "50%": {
+              "tasa": "11.99%",
+              "plazo": "12 a 72"
+            }
+          },
+          "comision_apertura": {
+            "0.0%": {
+              "pago_distribuidor": "2%"
+            },
+            "2.0%": {
+              "pago_distribuidor": "4%"
+            },
+            "2.5%": {
+              "pago_distribuidor": "4.5%"
+            }
+          },
+          "planes_especiales": [
+            "Plan Estudiante",
+            "Ama de Casa"
+          ]
+        }
+      },
+      "plan_subsidio": {
+        "descripcion": "Bonos flexibles aplicables a tasa, enganche, accesorios o valor factura",
+        "cobertura_subsidio": "50% dealer, 50% Honda de México",
+        "financiamiento_adicional": {
+          "accesorios": "Hasta 10% del valor del auto",
+          "garantia_extendida": "100%",
+          "seguros": "Vida y auto con tasa base"
+        }
+      },
+      "seminuevos": {
+        "plazos_por_antiguedad": {
+          "1-4_años": "Hasta 60 meses",
+          "5_años": "Hasta 48 meses",
+          "6_años": "Hasta 36 meses"
+        }
+      },
+      "condiciones_especiales": {
+        "programa_recompensas": "Puntos para Asesor, F&I y Gerente de Ventas",
+        "puntos_dobles": "Enganches ≥50%",
+        "bono_distribuidor": 1000,
+        "vigencia_formalizacion": "Hasta 7 de octubre 2025"
+      }
+    },
+    "Santander": {
+      "financiera": "Santander",
+      "vigencia": "2 al 30 de septiembre 2025",
+      "boletin": "HDM-HF-25-363",
+      "planes_por_segmento": {
+        "Entry": {
+          "modelos_aplicables": [
+            "City",
+            "BR-V"
+          ],
+          "tasa_base": "11.69%",
+          "comision_apertura": "2.50%"
+        },
+        "Entry_RECO": {
+          "modelos_aplicables": [
+            "City",
+            "BR-V"
+          ],
+          "incentivo_fi": "1000 puntos por crédito"
+        },
+        "Low-Med": {
+          "modelos_aplicables": [
+            "HR-V",
+            "CR-V",
+            "Civic"
+          ],
+          "tasa_base": "11.69%",
+          "comision_apertura": "2.50%"
+        },
+        "Low-Med_RECO": {
+          "modelos_aplicables": [
+            "HR-V",
+            "CR-V",
+            "Civic"
+          ],
+          "incentivo_fi": "1000 puntos por crédito"
+        },
+        "Med-High": {
+          "modelos_aplicables": [
+            "Accord"
+          ],
+          "tasa_base": "11.69%",
+          "comision_apertura": "2.50%"
+        },
+        "Med-High_RECO": {
+          "modelos_aplicables": [
+            "Accord"
+          ],
+          "incentivo_fi": "1000 puntos por crédito"
+        },
+        "Big-Suv": {
+          "modelos_aplicables": [
+            "Pilot",
+            "Odyssey"
+          ],
+          "tasa_base": "11.69%",
+          "comision_apertura": "2.50%"
+        },
+        "Big-Suv_RECO": {
+          "modelos_aplicables": [
+            "Pilot",
+            "Odyssey"
+          ],
+          "incentivo_fi": "1000 puntos por crédito"
+        }
+      },
+      "planes_estandar": {
+        "bono_fi": 1000,
+        "descripcion": "Bono de $1,000 para F&I por cada crédito con planes estándar"
+      },
+      "seminuevos": {
+        "disponible": true,
+        "matriz_enganches": "Por antigüedad y plazo"
+      },
+      "programa_recompensas": {
+        "puntos_dobles": {
+          "condicion": "Penetración mínima 25% mensual",
+          "beneficiarios": [
+            "F&I",
+            "Asesor",
+            "Gerente de Ventas"
+          ]
+        },
+        "financiamiento_adicional": {
+          "garantia_extendida": "100%",
+          "accesorios": "Hasta 10% del valor del auto"
+        }
+      },
+      "condiciones_especiales": {
+        "vigencia_formalizacion": "Hasta 7 de octubre 2025",
+        "contactos_regionales": {
+          "Metropolitana": {
+            "Linda_Garcia": {
+              "celular": "5544908693",
+              "email": "lingarcia@santander.com.mx"
+            },
+            "Alejandra_Alducin": {
+              "celular": "5621914849",
+              "email": "aalducin@santander.com.mx"
+            }
+          },
+          "Norte": {
+            "Manuel_Ayala": {
+              "celular": "5545886227",
+              "email": "manayala@santander.com.mx"
+            }
+          },
+          "Sureste": {
+            "Carlos_Mendoza": {
+              "celular": "5546130111",
+              "email": "cjmendozac@santander.com.mx"
+            }
+          },
+          "Bajio": {
+            "Alejandra_Tiscareño": {
+              "celular": "5543867919",
+              "email": "atiscareo@santander.com.mx"
+            }
+          },
+          "Occidente": {
+            "Oscar_Woo": {
+              "celular": "5554054324",
+              "email": "oawoo@santander.com.mx"
+            }
+          }
+        }
+      }
+    }
+  },
+  "matriz_comisiones": {
+    "descripcion": "Matriz de comisiones por financiera, plan y condiciones",
+    "BBVA": {
+      "comision_base": "0/2/2.5%",
+      "incentivos_maximos": "Hasta 6%",
+      "planes_especiales": {
+        "ECO": "2% comisión + 2% incentivo",
+        "SUV": "2% comisión + 2% incentivo",
+        "ESP_CR-V": "0/2/2.5% comisión + 0/2/2.5% incentivo"
+      }
+    },
+    "Banorte": {
+      "comision_base": "1.5% a 5%",
+      "pago_distribuidor_variable": true,
+      "bono_adicional": 1000,
+      "restricciones": "No aplica 0% comisión para Odyssey y Pilot"
+    },
+    "Santander": {
+      "comision_base": "2.50%",
+      "tasa_competitiva": "Desde 11.69%",
+      "bonos_fi": 1000,
+      "programa_puntos": "Puntos dobles con 25% penetración"
+    }
+  },
+  "analisis_competitividad": {
+    "tasas_minimas": {
+      "BBVA": "9.49% (ESP CR-V 2026)",
+      "Banorte": "9.49% (Honda Feria SUV 2026)",
+      "Santander": "11.69% (Planes estándar)"
+    },
+    "bonos_maximos": {
+      "Odyssey_Pilot": 100000,
+      "CR-V_premium": 50000,
+      "Civic_Sport": 40000,
+      "modelos_entry": 20000
+    },
+    "ventajas_competitivas": {
+      "BBVA": [
+        "Tasas más bajas",
+        "Mayor variedad de planes",
+        "Smart Value"
+      ],
+      "Banorte": [
+        "Bonos flexibles",
+        "Programa recompensas",
+        "Subsidios compartidos"
+      ],
+      "Santander": [
+        "Simplicidad",
+        "Financiamiento 100% garantía",
+        "Contacto regional"
+      ]
+    }
+  }
+}

@@ -1,0 +1,152 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// NextAuth.js required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                   String                @id @default(cuid())
+  name                 String?
+  email                String                @unique
+  emailVerified        DateTime?
+  image                String?
+  password             String?
+  firstName            String?
+  lastName             String?
+  nombre_completo      String?               // Nombre completo del usuario
+  puesto               String?               // Puesto o cargo del usuario
+  role                 UserRole              @default(GENERAL)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  accounts             Account[]
+  sessions             Session[]
+  optimizationHistory  OptimizationHistory[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Honda Optimization specific models
+enum UserRole {
+  ADMINISTRADOR
+  VENTAS
+  GENERAL
+}
+
+model CompanyData {
+  id                        String   @id @default(cuid())
+  nombreEmpresa             String
+  razonSocial               String
+  marca                     String   @default("Honda")
+  rfc                       String
+  calle                     String
+  numero                    String
+  colonia                   String
+  delegacion                String
+  codigoPostal              String
+  ciudad                    String
+  estado                    String
+  // Nuevos campos para financieras
+  tieneFinancieraMarca      Boolean  @default(false)
+  puedeUsarOtrasFinancieras Boolean  @default(true)
+  nombreFinancieraMarca     String?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+}
+
+model OptimizationHistory {
+  id                String    @id @default(cuid())
+  userId            String?
+  parameters        String    // JSON serialized as String for SQLite
+  result            String    // JSON serialized as String for SQLite  
+  notes             String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  user              User?     @relation(fields: [userId], references: [id])
+}
+
+model FinancieraConfig {
+  id            String    @id @default(cuid())
+  financiera    String    @unique
+  configData    String    // JSON serialized as String for SQLite
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("financiera_config")
+}
+
+model PlanFinanciera {
+  id                  String    @id @default(cuid())
+  financiera          String    // BBVA, Banorte, Santander
+  nombre              String    // Nombre descriptivo del plan
+  activo              Boolean   @default(true)
+  
+  // Configuración de aplicabilidad
+  lineas              String?   // JSON array de líneas aplicables - null = todas
+  versiones           String?   // JSON array de versiones aplicables - null = todas las de la línea
+  
+  // Configuración de excepciones (hasta 3)
+  excepcion1_linea    String?   // Línea excepción 1
+  excepcion1_version  String?   // Versión excepción 1
+  excepcion2_linea    String?   // Línea excepción 2  
+  excepcion2_version  String?   // Versión excepción 2
+  excepcion3_linea    String?   // Línea excepción 3
+  excepcion3_version  String?   // Versión excepción 3
+  
+  // Datos financieros del plan
+  tasa                Float     // Tasa de interés
+  plazo               Int       // Plazo en meses
+  enganche_minimo     Float     // Enganche mínimo porcentaje
+  comision_apertura   Float     // Comisión de apertura
+  pago_distribuidor   Float     // Pago al distribuidor
+  bono_subsidio       Float     @default(0) // Nuevo campo para bono/subsidio
+  
+  // Metadatos
+  observaciones       String?   // Notas adicionales
+  prioridad           Int       @default(1) // Para ordenamiento
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@map("plan_financiera")
+}

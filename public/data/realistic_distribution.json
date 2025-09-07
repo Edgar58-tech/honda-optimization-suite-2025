@@ -1,0 +1,193 @@
+{
+  "metadata": {
+    "total_registros_honda": 198,
+    "total_ventas_periodo": 21746,
+    "meses_analizados": [
+      "Abril",
+      "Agosto",
+      "Enero",
+      "Febrero",
+      "Julio",
+      "Junio",
+      "Marzo",
+      "Mayo",
+      "Septiembre"
+    ],
+    "fecha_analisis": "2025-09-04"
+  },
+  "modelos_detectados": [
+    "Honda - Accord - Automóviles - De Lujo - Nacional - México",
+    "Honda - Accord- - Automóviles - De Lujo - Importado - Estados Unidos",
+    "Honda - Accord 2pts - Automóviles - De Lujo - Importado - Estados Unidos",
+    "Honda - BR-V - Camiones ligeros - SUV's - Importado - Tailandia",
+    "Honda - Civic - Automóviles - Compactos - Importado - Estados Unidos",
+    "Honda - Civic Ima - Automóviles - Compactos - Importado - Estados Unidos",
+    "Honda - Civic Si - Automóviles - Compactos - Importado - Canadá",
+    "Honda - Civic 2pts Ta - Automóviles - Compactos - Importado - Estados Unidos",
+    "Honda - Civic 2pts Tm - Automóviles - Compactos - Importado - Estados Unidos",
+    "Honda - Crosstour - Automóviles - De Lujo - Importado - Estados Unidos",
+    "Honda - CR-V - Camiones ligeros - SUV's - Importado - Estados Unidos",
+    "Honda - CR-V- - Camiones ligeros - SUV's - Nacional - México",
+    "Honda - CR-Z - Automóviles - Compactos - Importado - Japón",
+    "Honda - Fit - Automóviles - Subcompactos - Importado - Brasil",
+    "Honda - Fit- - Automóviles - Subcompactos - Nacional - México",
+    "Honda - Honda City - Automóviles - Compactos - Importado - Brasil",
+    "Honda - Honda Pilot - Camiones ligeros - SUV's - Importado - Estados Unidos",
+    "Honda - HR-V- - Camiones ligeros - SUV's - Nacional - México",
+    "Honda - Insight Hybrid - Automóviles - Compactos - Importado - Estados Unidos",
+    "Honda - Odyssey - Camiones ligeros - Minivans - Importado - Canadá",
+    "Honda - PROLOGUE - Camiones ligeros - SUV's - Nacional - México",
+    "Honda - Ridgeline - Camiones ligeros - Pick Ups - Importado - Canadá"
+  ],
+  "ventas_por_linea": {
+    "Accord": {
+      "total_periodo": 495,
+      "promedio_mensual": 70.71,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 77,
+        "Febrero": 54,
+        "Marzo": 48,
+        "Abril": 48,
+        "Mayo": 96,
+        "Junio": 113,
+        "Julio": 59,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    },
+    "BR-V": {
+      "total_periodo": 3567,
+      "promedio_mensual": 509.57,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 560,
+        "Febrero": 423,
+        "Marzo": 460,
+        "Abril": 546,
+        "Mayo": 523,
+        "Junio": 436,
+        "Julio": 619,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    },
+    "Civic": {
+      "total_periodo": 2271,
+      "promedio_mensual": 324.43,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 402,
+        "Febrero": 326,
+        "Marzo": 445,
+        "Abril": 328,
+        "Mayo": 279,
+        "Junio": 260,
+        "Julio": 231,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    },
+    "Otros": {
+      "total_periodo": 3822,
+      "promedio_mensual": 546.0,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 352,
+        "Febrero": 576,
+        "Marzo": 578,
+        "Abril": 285,
+        "Mayo": 716,
+        "Junio": 585,
+        "Julio": 730,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    },
+    "CR-V": {
+      "total_periodo": 5795,
+      "promedio_mensual": 827.86,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 956,
+        "Febrero": 908,
+        "Marzo": 1200,
+        "Abril": 646,
+        "Mayo": 714,
+        "Junio": 675,
+        "Julio": 696,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    },
+    "HR-V": {
+      "total_periodo": 4978,
+      "promedio_mensual": 711.14,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 972,
+        "Febrero": 901,
+        "Marzo": 952,
+        "Abril": 455,
+        "Mayo": 554,
+        "Junio": 554,
+        "Julio": 590,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    },
+    "Odyssey": {
+      "total_periodo": 818,
+      "promedio_mensual": 116.86,
+      "meses_con_datos": 7,
+      "ventas_por_mes": {
+        "Enero": 117,
+        "Febrero": 96,
+        "Marzo": 99,
+        "Abril": 106,
+        "Mayo": 175,
+        "Junio": 142,
+        "Julio": 83,
+        "Agosto": 0,
+        "Septiembre": 0
+      }
+    }
+  },
+  "distribucion_realista_28_unidades": {
+    "Accord": {
+      "porcentaje_historico": 2.28,
+      "promedio_mensual": 70.71,
+      "volumen_sugerido_28": 1
+    },
+    "BR-V": {
+      "porcentaje_historico": 16.4,
+      "promedio_mensual": 509.57,
+      "volumen_sugerido_28": 5
+    },
+    "Civic": {
+      "porcentaje_historico": 10.44,
+      "promedio_mensual": 324.43,
+      "volumen_sugerido_28": 3
+    },
+    "Otros": {
+      "porcentaje_historico": 17.58,
+      "promedio_mensual": 546.0,
+      "volumen_sugerido_28": 5
+    },
+    "CR-V": {
+      "porcentaje_historico": 26.65,
+      "promedio_mensual": 827.86,
+      "volumen_sugerido_28": 7
+    },
+    "HR-V": {
+      "porcentaje_historico": 22.89,
+      "promedio_mensual": 711.14,
+      "volumen_sugerido_28": 6
+    },
+    "Odyssey": {
+      "porcentaje_historico": 3.76,
+      "promedio_mensual": 116.86,
+      "volumen_sugerido_28": 1
+    }
+  }
+}
